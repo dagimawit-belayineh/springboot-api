@@ -1,3 +1,14 @@
 ### GET request to example server
 GET  localhost:9090/api/v1/students
 ###
+POST http://localhost:9090/api/v1/students
+Content-Type: application/json
+
+{
+  "name": "sami",
+  "techStack": "springBoot, C++, JavaScript"
+}
+###
+DELETE http://localhost:9090/api/v1/students/3
+###
+PUT http://localhost:9090/api/v1/students/6

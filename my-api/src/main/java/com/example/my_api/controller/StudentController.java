@@ -1,7 +1,6 @@
 package com.example.my_api.controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.my_api.StudentService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -9,20 +8,37 @@ import java.util.List;
 @RequestMapping("api/v1/students")
 
 public class StudentController {
+    private final StudentService studentService;
+
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
     @GetMapping()
    public List<Students> getStudents() {
-    return List.of(
-            new Students(
-                    1,
-                    "Abeba",
-                    "Node, js , react "
-            ),
-
-        new Students(
-                2,
-                "Diva",
-                "java, Spring Boot , Nest "
-        )
-    );
+    return studentService.getAllStudents();
     }
+@PostMapping
+    public void addNewStudent(
+            @RequestBody  Students student) {
+     studentService.insertStudent(student);
+
+    }
+    @GetMapping("{id}")
+    public Students getStudentsById(
+            @RequestParam Integer id ) {
+       return studentService.getStudentById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public  void deleteStudentById(@PathVariable Integer id) {
+        studentService.deleteStudentById(id);
+     }
+     @PutMapping("/{id}")
+    public void updateStudentById(
+            @PathVariable Integer id,
+            @RequestBody Students updatedStudent
+     ){
+        studentService.updateStudent(id, updatedStudent);
+     }
 }
